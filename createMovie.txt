@@ -1,0 +1,9 @@
+public createMovie{
+
+public static void main(String[] args) {
+
+ $sql = "INSERT INTO movies(native_name, english_name, year_made)
+            VALUES ('$native_name','$english_name','$year_made')";
+
+
+}
