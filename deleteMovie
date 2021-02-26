@@ -1,0 +1,10 @@
+public DeleteMovie{
+
+public static void main(String[] args) {
+
+	//sudo code
+
+ $sql = "delete from movies* Where MovieID = input";
+
+
+}
