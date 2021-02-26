@@ -1,0 +1,20 @@
+ try { 
+  
+          // Establishing connection to database
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb" , "root" , "");
+			
+			// statement creation
+			Statement myStat = myConn.createStatement();
+			
+			// SQL query execution
+			ResultSet myRs = myStat.executeQuery("select * from movies");
+  
+            // delete file 
+            if (myConn.delete()) 
+                System.out.println("File deleted"); 
+            else
+                System.out.println("File was not deleted"); 
+        } 
+        catch (Exception e) { 
+            System.err.println(e); 
+  
