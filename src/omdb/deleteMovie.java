@@ -1,8 +1,8 @@
 package omdb;
-{
-	//package iteration;
+
+//package iteration;
 	import java.sql.*;
-	public class MovieDriver {
+	public class deleteMovie {
 	    public static void main(String[] args) {
 	        //Delete  Movie
 	        try {
@@ -26,5 +26,4 @@ package omdb;
 	            ex.printStackTrace();
 	        }
 	    }
-	}
 }
