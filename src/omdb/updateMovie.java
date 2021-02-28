@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class movieUpdate {
+public class updateMovie {
 	
 	public static void main(String[] args) {
 		
