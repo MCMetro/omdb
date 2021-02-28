@@ -13,9 +13,9 @@ package omdb;
 	            //STEP 2: Execute a query
 	            System.out.println("Delete movie from movie database with ID?");
 	            stmt = conn.createStatement();
-	            //STEP 3: Insert Values
-	            String sql = "DELETE * FROM  movies " +
-	            		"WHERE id = 1";
+	            //STEP 3: Delete Values
+	            String sql = "DELETE FROM  movies " +
+	            		"WHERE movie_id = '1'";
 	            stmt.executeUpdate(sql);
 	            System.out.println("Movie deleted successfully!");
 	            //STEP 4: Close the connection

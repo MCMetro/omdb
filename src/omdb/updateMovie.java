@@ -16,13 +16,13 @@ public class updateMovie {
 
 		//create connection to database
 		//PreparedStatement allows for repeated use of mysql statement if needed. 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Mydb", "root", "");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
                 PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
 
             // prepare data for update
             String movie_name = "test";
-            int id = 3;
-            int movie_year = 1933;
+            int id = 1;
+            int movie_year = 2021;
             pstmt.setString(1, movie_name);
             pstmt.setInt(2, movie_year);
             pstmt.setInt(3, id);

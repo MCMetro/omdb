@@ -14,34 +14,37 @@ public class readMovie {
 			Statement myStat = myConn.createStatement();
 
 			// SQL query creation
-			String sqlQuery = "SELECT movie_id, english_name, native_name, year_made"
-					+ "FROM movies";
-//					+ "LEFT JOIN movie_data md on m.movie_id = md.movie_id "
-//					+ "WHERE md.movie_id = '3'";
+			String sqlQuery = "select m.movie_id, m.english_name, m.native_name, m.year_made, md.tag_line, md.movie_id, md.language, md.country, md.genre, md.plot\r\n"
+					+ "FROM movies m\r\n" + "LEFT JOIN movie_data md on m.movie_id = md.movie_id\r\n"
+					+ "WHERE m.movie_id = '1'";
 
 			// SQL query execution
 			ResultSet myRs = myStat.executeQuery(sqlQuery);
+
+			// Extract Necessary Data
+			myRs.next();
 			int movieId = myRs.getInt("movie_id");
-			System.out.println("movie_id: " + movieId);
+			String englishName = myRs.getString("english_name");
+			String nativeName = myRs.getString("native_name");
+			int yearMade = myRs.getInt("year_made");
+			String country = myRs.getString("country");
+			String genre = myRs.getString("language");
+			String plot = myRs.getString("plot");
+			String tagLine = myRs.getString("tag_line");
 
 			// process the results
-			System.out.println("Passed SQL query");
-			
-			while (myRs.next()) {
-				System.out.println(myRs.getInt("m.movie_id") + ", " + myRs.getString("m.native_name") + ", "
-						+ myRs.getString("m.english_name") + ", " + myRs.getInt("m.year_made"));
-//				System.out.println(myRs.getString("md.tag_line") + ", "
-//						+ myRs.getString("md.language") + ", " + myRs.getString("md.country") + ", " + myRs.getString("md.genre")
-//						+ ", " + myRs.getString("md.plot"));
-
-			}
+			System.out.println("Movie ID: " + movieId);
+			System.out.println("English Name: " + englishName);
+			System.out.println("Native Name: " + nativeName);
+			System.out.println("Year Made: " + yearMade);
+			System.out.println("Country: " + country);
+			System.out.println("Genre: " + genre);
+			System.out.println("Plot: " + plot);
+			System.out.println("Tagline: " + tagLine);
 
 			// close the connection
 			myConn.close();
-		}
-
-		catch (Exception exc) {
-
+		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
 	}
