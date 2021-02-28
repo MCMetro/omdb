@@ -1,27 +1,36 @@
 package omdb;
 import java.sql.*;
+
 public class MovieDriver {
+
     public static void main(String[] args) {
-        //Create Movie
+        // TODO Auto-generated method stub
         try {
-            //STEP 1: Start Connection to the Database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-            System.out.println("Connected database successfully...");
-            Statement stmt = null;
-            //STEP 2: Execute a query
-            System.out.println("Inserting new movie into the movie omdb.movies...");
-            stmt = conn.createStatement();
-            //STEP 3: Insert Values
-            String sql = "INSERT INTO movies " +
-                    "VALUES (1, 'Tenet', 'Tenet', 2020)";
-            stmt.executeUpdate(sql);
-            System.out.println("Movie created successfully!");
-            //STEP 4: Close the connection
-            conn.close();
-            System.out.println("Goodbye!");
-            //STEP 5: Catch Errors
-        } catch (Exception ex) {
+
+            //Get Connection to the Database
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+
+            //Create a statment
+            Statement myStat = myConn.createStatement();
+
+            //Execute SQL Query
+            ResultSet myRs = myStat.executeQuery("SELECT * FROM movies");
+
+
+            //Process the result set
+            while (myRs.next()) {
+                System.out.println(myRs.getString("movie_id") + ", " + myRs.getString("native_name") + ", " + myRs.getString("english_name"));
+            }
+
+            //Close the connection
+            myConn.close();
+
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
         }
+
+
     }
+
 }
