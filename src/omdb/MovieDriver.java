@@ -3,6 +3,9 @@ import java.sql.*;
 
 public class MovieDriver {
 
+	
+// TODO: Add error handling to methods
+// TODO: Change method types to boolean?
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         try {

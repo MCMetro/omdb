@@ -2,6 +2,8 @@ package omdb;
 
 import java.sql.*;
 public class createMovie {
+	
+	// TODO: Change to a boolean for true false and error handling.
   public static void main(String[] args) {
       //Create Movie
       try {

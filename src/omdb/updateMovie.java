@@ -7,7 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class updateMovie {
-	
+
+	// TODO: Change to a boolean for true false and error handling.
 	public static void main(String[] args) {
 		
 		String sqlUpdate = "UPDATE movies "
