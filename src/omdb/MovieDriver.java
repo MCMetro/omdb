@@ -3,54 +3,23 @@ import java.sql.*;
 
 public class MovieDriver {
 
+// TODO: Add error handling (change return types to boolean?)
 	
-// TODO: Add error handling to methods
-// TODO: Change method types to boolean?
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        try {
-
-            //Get Connection to the Database
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-
-            //Create a statment
-            Statement myStat = myConn.createStatement();
-
-            //Execute SQL Query
-            ResultSet myRs = myStat.executeQuery("SELECT * FROM movies");
-
-
-            //Process the result set
-            while (myRs.next()) {
-                System.out.println(myRs.getString("movie_id") + ", " + myRs.getString("native_name") + ", " + myRs.getString("english_name"));
-            }
-
-            //Close the connection
-            myConn.close();
-
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-
-    }
-    
-    // TODO: Add variables for driver calls later
-    public void updateMovie() {
+    public static void updateMovie(int movieID, String englishName, int yearMade) {
 		String sqlUpdate = "UPDATE movies "
                 + "SET english_name = ?, year_made = ? "
                 + "WHERE movie_id = ?";
-
+		
+		// Set local variables to user input data.
+		int id = movieID;
+		String movie_name = englishName;
+		int movie_year = yearMade;
 		//create connection to database
 		//PreparedStatement allows for repeated use of mysql statement if needed. 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
                 PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
 
             // prepare data for update
-            String movie_name = "test";
-            int id = 3;
-            int movie_year = 1933;
             pstmt.setString(1, movie_name);
             pstmt.setInt(2, movie_year);
             pstmt.setInt(3, id);
@@ -67,9 +36,7 @@ public class MovieDriver {
         }
     }
     
-    
-    // TODO: Add variables for driver calls later
-    public void createMovie() {
+    public static void createMovie(int movieID, String englishName, String nativeName, int year) {
         try {
             //STEP 1: Start Connection to the Database
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
@@ -80,7 +47,7 @@ public class MovieDriver {
             stmt = conn.createStatement();
             //STEP 3: Insert Values
             String sql = "INSERT INTO movies " +
-                    "VALUES (1, 'Tenet', 'Tenet', 2020)";
+                    "VALUES (" + movieID + ", '" + englishName + "', '" +  nativeName + "', " + year + ")";
             stmt.executeUpdate(sql);
             System.out.println("Movie created successfully!");
             //STEP 4: Close the connection
@@ -92,8 +59,7 @@ public class MovieDriver {
         }
     }
     
-    // TODO: Add variables for driver calls later
-    public void readMovie() {
+    public static void readMovie(int movieID) {
     	try {
 			// Establishing connection to database
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
@@ -104,7 +70,7 @@ public class MovieDriver {
 			// SQL query creation
 			String sqlQuery = "select m.movie_id, m.english_name, m.native_name, m.year_made, md.tag_line, md.movie_id, md.language, md.country, md.genre, md.plot\r\n"
 					+ "FROM movies m\r\n" + "LEFT JOIN movie_data md on m.movie_id = md.movie_id\r\n"
-					+ "WHERE m.movie_id = '291'";
+					+ "WHERE m.movie_id = '" + movieID + "'";
 
 			// SQL query execution
 			ResultSet myRs = myStat.executeQuery(sqlQuery);
@@ -137,8 +103,7 @@ public class MovieDriver {
 		}
     }
     
-    // TODO: Add variables for driver calls later
-    public void deleteMovie() {
+    public static void deleteMovie(int movieID) {
         try {
             //STEP 1: Start Connection to the Database
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
@@ -148,7 +113,7 @@ public class MovieDriver {
             System.out.println("Delete movie from movie database with ID?");
             stmt = conn.createStatement();
             //STEP 3: Delete Values
-            String sql = "DELETE FROM movies WHERE movie_id = '1'";
+            String sql = "DELETE FROM movies WHERE movie_id = '" + movieID + "'";
             stmt.executeUpdate(sql);
             System.out.println("Movie deleted successfully!");
             //STEP 4: Close the connection
