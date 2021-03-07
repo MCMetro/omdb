@@ -124,5 +124,33 @@ public class MovieDriver {
             ex.printStackTrace();
         }
     }
+    
+    public boolean processMovieSong(String nativeName, int yearMade) throws SQLException {
+		// Establishing connection to database
+		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+
+		// statement creation
+		Statement myStat = myConn.createStatement();
+
+		// SQL query creation
+		String sqlQuery = "select native_name, year_made, title, execution_status\n"
+				+ "FROM ms_test_data m\r\n"
+				+ "WHERE native_name = '" + nativeName + "'\n"
+				+ "AND year_made = '" + yearMade + "'";
+
+		// SQL query execution
+		ResultSet myRs = myStat.executeQuery(sqlQuery);
+		
+		// Gather data results
+		myRs.next();
+		String nativeNameResult = myRs.getString("native_name");
+		String titleResult = myRs.getString("title");
+		int yearMadeResult = myRs.getInt("year_made");
+		String executionStatus = myRs.getString("execution_status");
+		
+		// TODO: Add if statements for the various cases.
+    	
+    	return true;
+    }
 
 }
