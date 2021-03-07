@@ -30,40 +30,41 @@ SET time_zone = "+00:00";
 CREATE TABLE `ms_test_data` (
   `native_name` varchar(100) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `execution_status` varchar(100) NOT NULL,
-  `movie_name` varchar(100) NOT NULL
+  `movie_name` varchar(100) NOT NULL,
+  `year_made` year(4) NOT NULL,
+  `execution_status` varchar(100) NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ms_test_data`
 --
 
-INSERT INTO `ms_test_data` (`native_name`, `title`, `execution_status`, `movie_name`) VALUES
-('The Greatest Showman', 'The Greatest Showman', 'A Million Dreams (Reprise)', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'Come Alive', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'The Other Side', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'Never Enough', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'This Is Me', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'Rewrite the Stars', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'Tightrope', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'Never Enough (Reprise)', 'to be processed'),
-('The Greatest Showman', 'The Greatest Showman', 'From Now On', 'to be processed'),
-('Chicago', 'Chicago ', 'Overture / All That Jazz', 'to be processed'),
-('Chicago', 'Chicago ', 'Funny Honey', 'to be processed'),
-('Chicago', 'Chicago ', 'When You\'re Good to Mama', 'to be processed'),
-('Chicago', 'Chicago ', 'Cell Block Tango', 'to be processed'),
-('Chicago', 'Chicago ', 'All I Care About', 'to be processed'),
-('Chicago', 'Chicago ', 'We Both Reached for the Gun', 'to be processed'),
-('Chicago', 'Chicago ', 'Roxie', 'to be processed'),
-('Chicago', 'Chicago ', 'I Can\'t Do It Alone', 'to be processed'),
-('Chicago', 'Chicago ', 'Mister Cellophane', 'to be processed'),
-('Chicago', 'Chicago ', 'Razzle Dazzle', 'to be processed'),
-('Chicago', 'Chicago ', 'Class', 'to be processed'),
-('Chicago', 'Chicago ', 'A Tap Dance', 'to be processed'),
-('Chicago', 'Chicago ', 'Nowadays', 'to be processed'),
-('Chicago', 'Chicago ', 'Nowadays / Hot Honey Rag ', 'to be processed'),
-('Chicago', 'Chicago ', 'I Move On', 'to be processed'),
-('Chicago', 'Chicago ', 'All That Jazz (reprise)', 'to be processed');
+INSERT INTO `ms_test_data` (`native_name`, `movie_name`, `title`, `year_made`, `execution_status`) VALUES
+('The Greatest Showman', 'The Greatest Showman', 'A Million Dreams (Reprise)', 2017, 'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'Come Alive', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'The Other Side', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'Never Enough', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'This Is Me', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'Rewrite the Stars', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'Tightrope', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'Never Enough (Reprise)', 2017,'to be processed'),
+('The Greatest Showman', 'The Greatest Showman', 'From Now On', 2017,'to be processed'),
+('Chicago', 'Chicago ', 'Overture / All That Jazz', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Funny Honey', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'When You\'re Good to Mama', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Cell Block Tango', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'All I Care About', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'We Both Reached for the Gun', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Roxie', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'I Can\'t Do It Alone', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Mister Cellophane', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Razzle Dazzle', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Class', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'A Tap Dance', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Nowadays', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'Nowadays / Hot Honey Rag ', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'I Move On', 2002,'to be processed'),
+('Chicago', 'Chicago ', 'All That Jazz (reprise)', 2002,'to be processed');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

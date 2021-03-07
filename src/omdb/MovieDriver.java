@@ -148,7 +148,22 @@ public class MovieDriver {
 		int yearMadeResult = myRs.getInt("year_made");
 		String executionStatus = myRs.getString("execution_status");
 		
-		// TODO: Add if statements for the various cases.
+		// TODO: Case 1: Aziz | Maamoun
+		if ((nativeNameResult == null) && (String.valueOf(yearMadeResult) == null)) {
+			
+		}
+		
+		// TODO: Case 2: Aziz | Maamoun
+		
+		// TODO: Case 3: Mahad
+		
+		// TODO: Case 4: Mahad
+		
+		// TODO: Case 5: Max
+		
+		// TODO: Case 6: Max
+		
+		// TODO: Case 7: Group
     	
     	return true;
     }
