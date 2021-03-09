@@ -1,66 +1,64 @@
 package omdb;
+
 import java.sql.*;
 
 public class MovieDriver {
 
 // TODO: Add error handling (change return types to boolean?)
-	
-    public static void updateMovie(int movieID, String englishName, int yearMade) {
-		String sqlUpdate = "UPDATE movies "
-                + "SET english_name = ?, year_made = ? "
-                + "WHERE movie_id = ?";
-		
+
+	public static void updateMovie(int movieID, String englishName, int yearMade) {
+		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
+
 		// Set local variables to user input data.
 		int id = movieID;
 		String movie_name = englishName;
 		int movie_year = yearMade;
-		//create connection to database
-		//PreparedStatement allows for repeated use of mysql statement if needed. 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-                PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
+		// create connection to database
+		// PreparedStatement allows for repeated use of mysql statement if needed.
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+				PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
 
-            // prepare data for update
-            pstmt.setString(1, movie_name);
-            pstmt.setInt(2, movie_year);
-            pstmt.setInt(3, id);
-            
-            
-            //print out rows affected
-            int rowAffected = pstmt.executeUpdate();
-            System.out.println(String.format("Row affected %d", rowAffected));
-            
-            conn.close();
-            
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-    
-    public static void createMovie(int movieID, String englishName, String nativeName, int year) {
-        try {
-            //STEP 1: Start Connection to the Database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-            System.out.println("Connected database successfully...");
-            Statement stmt = null;
-            //STEP 2: Execute a query
-            System.out.println("Inserting new movie into the movie omdb.movies...");
-            stmt = conn.createStatement();
-            //STEP 3: Insert Values
-            String sql = "INSERT INTO movies " +
-                    "VALUES (" + movieID + ", '" + englishName + "', '" +  nativeName + "', " + year + ")";
-            stmt.executeUpdate(sql);
-            System.out.println("Movie created successfully!");
-            //STEP 4: Close the connection
-            conn.close();
-            System.out.println("Goodbye!");
-            //STEP 5: Catch Errors
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public static void readMovie(int movieID) {
-    	try {
+			// prepare data for update
+			pstmt.setString(1, movie_name);
+			pstmt.setInt(2, movie_year);
+			pstmt.setInt(3, id);
+
+			// print out rows affected
+			int rowAffected = pstmt.executeUpdate();
+			System.out.println(String.format("Row affected %d", rowAffected));
+
+			conn.close();
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
+	public static void createMovie(int movieID, String englishName, String nativeName, int year) {
+		try {
+			// STEP 1: Start Connection to the Database
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			System.out.println("Connected database successfully...");
+			Statement stmt = null;
+			// STEP 2: Execute a query
+			System.out.println("Inserting new movie into the movie omdb.movies...");
+			stmt = conn.createStatement();
+			// STEP 3: Insert Values
+			String sql = "INSERT INTO movies " + "VALUES (" + movieID + ", '" + englishName + "', '" + nativeName
+					+ "', " + year + ")";
+			stmt.executeUpdate(sql);
+			System.out.println("Movie created successfully!");
+			// STEP 4: Close the connection
+			conn.close();
+			System.out.println("Goodbye!");
+			// STEP 5: Catch Errors
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void readMovie(int movieID) {
+		try {
 			// Establishing connection to database
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
 
@@ -101,31 +99,31 @@ public class MovieDriver {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-    }
-    
-    public static void deleteMovie(int movieID) {
-        try {
-            //STEP 1: Start Connection to the Database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-            System.out.println("Connected database successfully...");
-            Statement stmt = null;
-            //STEP 2: Execute a query
-            System.out.println("Delete movie from movie database with ID?");
-            stmt = conn.createStatement();
-            //STEP 3: Delete Values
-            String sql = "DELETE FROM movies WHERE movie_id = '" + movieID + "'";
-            stmt.executeUpdate(sql);
-            System.out.println("Movie deleted successfully!");
-            //STEP 4: Close the connection
-            conn.close();
-            System.out.println("Goodbye!");
-            //STEP 5: Catch Errors
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public boolean processMovieSong(String nativeName, int yearMade) throws SQLException {
+	}
+
+	public static void deleteMovie(int movieID) {
+		try {
+			// STEP 1: Start Connection to the Database
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			System.out.println("Connected database successfully...");
+			Statement stmt = null;
+			// STEP 2: Execute a query
+			System.out.println("Delete movie from movie database with ID?");
+			stmt = conn.createStatement();
+			// STEP 3: Delete Values
+			String sql = "DELETE FROM movies WHERE movie_id = '" + movieID + "'";
+			stmt.executeUpdate(sql);
+			System.out.println("Movie deleted successfully!");
+			// STEP 4: Close the connection
+			conn.close();
+			System.out.println("Goodbye!");
+			// STEP 5: Catch Errors
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public boolean processMovieSong(String nativeName, int yearMade, int movieID, int songID, String englishName) throws SQLException {
 		// Establishing connection to database
 		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
 
@@ -133,39 +131,72 @@ public class MovieDriver {
 		Statement myStat = myConn.createStatement();
 
 		// SQL query creation
-		String sqlQuery = "select native_name, year_made, title, execution_status\n"
-				+ "FROM ms_test_data m\r\n"
-				+ "WHERE native_name = '" + nativeName + "'\n"
-				+ "AND year_made = '" + yearMade + "'";
+		String sqlQuery = "select native_name, year_made, title, execution_status\n" + "FROM ms_test_data m\r\n"
+				+ "WHERE native_name = '" + nativeName + "'\n" + "AND year_made = '" + yearMade + "'";
 
 		// SQL query execution
 		ResultSet myRs = myStat.executeQuery(sqlQuery);
-		
+
 		// Gather data results
 		myRs.next();
 		String nativeNameResult = myRs.getString("native_name");
 		String titleResult = myRs.getString("title");
 		int yearMadeResult = myRs.getInt("year_made");
 		String executionStatus = myRs.getString("execution_status");
-		
+
+		// movie_song SQL query
+		sqlQuery = "select movie_id, song_id\n" + "FROM movie_song m\r\n" + "WHERE movie_id = '" + movieID + "'\n"
+				+ "AND song_id = '" + songID + "'";
+
+		// SQL query execution
+		myRs = myStat.executeQuery(sqlQuery);
+
+		// movie_song results
+		myRs.next();
+		int movieSongMovieID = myRs.getInt("movie_id");
+		int movieSongSongID = myRs.getInt("song_id");
+
+		// movies SQL query
+		sqlQuery = "SELECT * FROM `movies` where native_name = '" + nativeName + "' AND year_made = " + yearMade;
+
+		// SQL query execution
+		ResultSet moviesResults = myStat.executeQuery(sqlQuery);
+
 		// TODO: Case 1: Aziz | Maamoun
 		if ((nativeNameResult == null) && (String.valueOf(yearMadeResult) == null)) {
-			
+
 		}
-		
+
 		// TODO: Case 2: Aziz | Maamoun
-		
+		if (moviesResults.next()) {
+
+			System.out.println("Error: Movie with native name " + nativeName + " and year " + yearMade
+					+ " is a duplicate. Please try again");
+		} else {
+
+			// STEP 4: Extract Necessary Data
+			System.out.println("Movie is not a duplicate......");
+			System.out.println("Creating.....");
+			createMovie(movieID, nativeName, englishName, yearMade);
+		}
 		// TODO: Case 3: Mahad
-		
+
 		// TODO: Case 4: Mahad
-		
-		// TODO: Case 5: Max
-		
-		// TODO: Case 6: Max
-		
+
+		// Case 5: Max
+		if ((String.valueOf(movieSongMovieID) != null) && (String.valueOf(movieSongSongID) != null)) {
+			try {
+				sqlQuery = "INSERT INTO movie_song VALUES (" + movieSongMovieID + "," + movieSongSongID + ")";
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// Case 6: Max
+		// Implicit ignore in the if statement above.
+
 		// TODO: Case 7: Group
-    	
-    	return true;
-    }
+
+		return true;
+	}
 
 }
