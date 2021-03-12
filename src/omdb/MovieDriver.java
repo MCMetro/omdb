@@ -190,12 +190,14 @@ public class MovieDriver {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		} 
 		// Case 6: Max
 		// Implicit ignore in the if statement above.
 
 		// TODO: Case 7: Group
 
+		myConn.close();
+		
 		return true;
 	}
 
