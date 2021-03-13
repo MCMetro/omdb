@@ -56,6 +56,27 @@ public class MovieDriver {
 			ex.printStackTrace();
 		}
 	}
+	
+	public static void createSong(int songID, String title) {
+		//set null values for lyrics and theme for the moment
+		String lyrics = null;
+		String theme = null;
+		try {	
+			//establish connection with database
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			Statement mystmt = conn.createStatement();
+			//create insert statement
+			String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", " + title + ", " + lyrics + ", " +
+					theme + ")";
+			//execute query
+			mystmt.executeUpdate(mySql);
+			System.out.println("Added song into songs table!");
+			//close connection
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
 	public static void readMovie(int movieID) {
 		try {
@@ -161,6 +182,23 @@ public class MovieDriver {
 
 		// SQL query execution
 		ResultSet moviesResults = myStat.executeQuery(sqlQuery);
+		
+		//songs SQL query; check if title exists in songs table
+		sqlQuery = "SELECT * FROM songs WHERE title = '" + titleResult + "'";
+		
+		//songs SQL query resultset
+		ResultSet songsResults = myStat.executeQuery(sqlQuery);
+		
+		//songs SQL query for last row
+		sqlQuery = "SELECT * FROM songs WHERE song_id = (SELECT max(song_id) FROM songs)";
+		
+		//get query results
+		myRs = myStat.executeQuery(sqlQuery);
+		myRs.next();
+		//get value of last song_id in songs table
+		int maxSongId = myRs.getInt("song_id");
+		int currentSongID = maxSongId + 1;
+		
 
 		// TODO: Case 1: Aziz | Maamoun
 		if ((nativeNameResult == null) && (String.valueOf(yearMadeResult) == null)) {
@@ -180,9 +218,21 @@ public class MovieDriver {
 			createMovie(movieID, nativeName, englishName, yearMade);
 		}
 		// TODO: Case 3: Mahad
-
+		//check if songsResults query is empty; title does not exist in songs table
+		if (!songsResults.next()) {
+			try {
+				//create song in songs table
+				System.out.println("Song does not exist in songs table");
+				System.out.println("Creating new song entry");
+				createSong(songID, titleResult);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 		// TODO: Case 4: Mahad
-
+		//check if song exists in songs table
+		if (songsResults.next())
+			System.out.println("Song already exists in songs table. Create entry ignored");
 		// Case 5: Max
 		if ((String.valueOf(movieSongMovieID) != null) && (String.valueOf(movieSongSongID) != null)) {
 			try {
