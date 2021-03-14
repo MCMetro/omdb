@@ -196,6 +196,7 @@ public class MovieDriver {
 		//check if movie does not exist and create if needed
 		
 		
+		//Case 1 Aziz
 		
 		Scanner scan = new Scanner(System.in);
 try {
@@ -232,6 +233,9 @@ try {
 			if (myResults.next()) {
 
 				System.out.println("Error: Movie with native name " + nativeName + " and year " + yearMade + " is a duplicate. Please try again");
+				
+				
+				//Case 2: 
 			} else {
 
 				// STEP 4: Extract Necessary Data
