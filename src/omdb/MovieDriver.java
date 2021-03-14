@@ -78,6 +78,34 @@ public class MovieDriver {
 			ex.printStackTrace();
 		}
 	}
+	
+	public static boolean checkSong(int songID, String titleResult) {
+		boolean b = false;
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			Statement myStat = conn.createStatement();
+			
+			//songs SQL query; check if title exists in songs table
+			String sqlQuery = "SELECT * FROM songs WHERE title = '" + titleResult + "'";
+			
+			//songs SQL query resultset
+			ResultSet songsResults = myStat.executeQuery(sqlQuery);
+			
+			//check if songsResults query is empty; title does not exist in songs table
+			if (!songsResults.next()) {
+				b = false;
+			}
+			// TODO: Case 4: Mahad
+			//check if song exists in songs table
+			if (songsResults.next()) {
+				b = true;
+			}	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 	public static void readMovie(int movieID) {
 		try {
@@ -184,11 +212,6 @@ public class MovieDriver {
 		// SQL query execution
 		ResultSet moviesResults = myStat.executeQuery(sqlQuery);
 		
-		//songs SQL query; check if title exists in songs table
-		sqlQuery = "SELECT * FROM songs WHERE title = '" + titleResult + "'";
-		
-		//songs SQL query resultset
-		ResultSet songsResults = myStat.executeQuery(sqlQuery);
 		
 		
 
@@ -261,7 +284,7 @@ try {
 		
 		// TODO: Case 3: Mahad
 		//check if songsResults query is empty; title does not exist in songs table
-		if (!songsResults.next()) {
+		if (!checkSong(songID, titleResult)) {
 			try {
 				//create song in songs table
 				System.out.println("Song does not exist in songs table");
@@ -271,10 +294,13 @@ try {
 				ex.printStackTrace();
 			}
 		}
+		
 		// TODO: Case 4: Mahad
 		//check if song exists in songs table
-		if (songsResults.next())
+		if (checkSong(songID, titleResult)) {
 			System.out.println("Song already exists in songs table. Create entry ignored");
+		}
+		
 		// Case 5: Max
 		if ((String.valueOf(movieSongMovieID) != null) && (String.valueOf(movieSongSongID) != null)) {
 			try {
