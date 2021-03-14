@@ -201,11 +201,13 @@ public class MovieDriver {
 		
 
 		// TODO: Case 1: Aziz | Maamoun
+		//check if movie does not exist and create if needed
 		if ((nativeNameResult == null) && (String.valueOf(yearMadeResult) == null)) {
 
 		}
 
 		// TODO: Case 2: Aziz | Maamoun
+		//check to see if movie exists and ignore creation if so
 		if (moviesResults.next()) {
 
 			System.out.println("Error: Movie with native name " + nativeName + " and year " + yearMade
