@@ -1,10 +1,11 @@
 package omdb;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class omdb {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		// Declare the movie variables
 		int movieID;
 		String englishName;
@@ -17,6 +18,7 @@ public class omdb {
 		System.out.println("2. Update a movie in the database.");
 		System.out.println("3. Read a movie from the database.");
 		System.out.println("4. Delete a movie from the database.");
+		System.out.println("5. Run processMovieSong");
 		System.out.println("q. Exit the program");
 		System.out.print("\nEnter your choice: ");
 		Scanner scan = new Scanner(System.in);
@@ -68,6 +70,23 @@ public class omdb {
 				movieID = scan.nextInt();
 				
 				MovieDriver.deleteMovie(movieID);
+			case "5":
+				System.out.println("\nTesting processMovieSong\n");
+				System.out.println("Enter song ID: ");
+				int songID = scan.nextInt();
+				System.out.println("Enter movie ID: ");
+				scan.nextLine();
+				movieID = scan.nextInt();
+				System.out.println("Enter Native Name: ");
+				scan.nextLine();
+				nativeName = scan.nextLine();
+				System.out.println("Enter English Name: ");
+				englishName = scan.nextLine();
+				System.out.println("Enter year made: ");
+				yearMade = scan.nextInt();
+				
+				MovieDriver.processMovieSong(nativeName, yearMade, movieID, songID, englishName);
+				break;
 			}
 			choice = "q";
 		} while (choice != "q");

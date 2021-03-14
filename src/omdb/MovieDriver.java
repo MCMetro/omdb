@@ -173,7 +173,7 @@ public class MovieDriver {
 		}
 	}
 
-	public boolean processMovieSong(String nativeName, int yearMade, int movieID, int songID, String englishName) throws SQLException {
+	public static boolean processMovieSong(String nativeName, int yearMade, int movieID, int songID, String englishName) throws SQLException {
 		// Establishing connection to database
 		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
 
