@@ -25,6 +25,7 @@ public class MovieDriver {
 
 			// print out rows affected
 			int rowAffected = pstmt.executeUpdate();
+			System.out.println("Movie Updated Successfully!");
 			System.out.println(String.format("Row affected %d", rowAffected));
 
 			conn.close();
@@ -59,15 +60,14 @@ public class MovieDriver {
 	
 	public static void createSong(int songID, String title) {
 		//set null values for lyrics and theme for the moment
-		String lyrics = null;
-		String theme = null;
+		String lyrics = "' '";
+		String theme = "' '";
 		try {	
 			//establish connection with database
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
 			Statement mystmt = conn.createStatement();
 			//create insert statement
-			String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", " + title + ", " + lyrics + ", " +
-					theme + ")";
+			String mySql = "INSERT INTO songs VALUES (" + songID + ", " + title + ", " + lyrics + ", " + theme + ");";
 			//execute query
 			mystmt.executeUpdate(mySql);
 			System.out.println("Added song into songs table!");
@@ -189,15 +189,6 @@ public class MovieDriver {
 		//songs SQL query resultset
 		ResultSet songsResults = myStat.executeQuery(sqlQuery);
 		
-		//songs SQL query for last row
-		sqlQuery = "SELECT * FROM songs WHERE song_id = (SELECT max(song_id) FROM songs)";
-		
-		//get query results
-		myRs = myStat.executeQuery(sqlQuery);
-		myRs.next();
-		//get value of last song_id in songs table
-		int maxSongId = myRs.getInt("song_id");
-		int currentSongID = maxSongId + 1;
 		
 
 		// TODO: Case 1: Aziz | Maamoun
