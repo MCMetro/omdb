@@ -198,19 +198,19 @@ public class MovieDriver {
 		
 		//Case 1 Aziz
 		
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);
 try {
 			// STEP 0: Ask for movie details
-			System.out.println("\nCreate a new movie! \n");
-			System.out.print("Enter movie ID: ");
-			movieID = scan.nextInt();
-			System.out.print("Enter the movie's English Name: ");
-			scan.nextLine(); // Consume the \n from nextInt above.
-			englishName = scan.nextLine();
-			System.out.print("Enter the movie's Native Name: ");
-			nativeName = scan.nextLine();
-			System.out.print("Enter the year the movie was made: ");
-			yearMade = scan.nextInt();
+		//	System.out.println("\nCreate a new movie! \n");
+		//	System.out.print("Enter movie ID: ");
+		//	movieID = scan.nextInt();
+		//	System.out.print("Enter the movie's English Name: ");
+		//	scan.nextLine(); // Consume the \n from nextInt above.
+		//	englishName = scan.nextLine();
+		//	System.out.print("Enter the movie's Native Name: ");
+		//	nativeName = scan.nextLine();
+		//	System.out.print("Enter the year the movie was made: ");
+		//	yearMade = scan.nextInt();
 
 			// Print Test:
 
@@ -224,7 +224,7 @@ try {
 			System.out.println("Connected to database successfully...");
 			Statement stmt = null;
 			// STEP 2: Execute a query
-			System.out.println("Rnning sql query...");
+			System.out.println("Running sql query...");
 			stmt = conn.createStatement();
 			// STEP 3: Insert Values
 			String mysqlQuery = "SELECT * FROM `movies` where native_name = '" + nativeName + "' AND year_made = " + yearMade;;
@@ -247,7 +247,7 @@ try {
 
 			// STEP 6: Close the connection
 		conn.close();
-			scan.close();
+			//scan.close();
 			// STEP 7: Catch Errors
 		} catch (Exception ex) {
 			ex.printStackTrace();
