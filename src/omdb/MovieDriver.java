@@ -8,7 +8,7 @@ public class MovieDriver {
 
 	public static void updateMovie(int movieID, String englishName, int yearMade) {
 		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
-
+		
 		// Set local variables to user input data.
 		int id = movieID;
 		String movie_name = englishName;
