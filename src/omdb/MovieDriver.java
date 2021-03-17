@@ -68,7 +68,7 @@ public class MovieDriver {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
 			Statement mystmt = conn.createStatement();
 			//create insert statement
-			String mySql = "INSERT INTO songs VALUES (" + songID + ", " + title + ", " + lyrics + ", " + theme + ");";
+			String mySql = "INSERT INTO songs VALUES (" + songID + ", " + title + ");"; //+ " // " + lyrics + ", " + theme + ");";
 			//execute query
 			mystmt.executeUpdate(mySql);
 			System.out.println("Added song into songs table!");
@@ -202,9 +202,9 @@ public class MovieDriver {
 		myRs = myStat.executeQuery(sqlQuery);
 
 		// movie_song results
-		myRs.next();
-		int movieSongMovieID = myRs.getInt("movie_id");
-		int movieSongSongID = myRs.getInt("song_id");
+		//myRs.next();
+		int movieSongMovieID = 0;// myRs.getInt("movie_id");
+		int movieSongSongID =  0;//myRs.getInt("song_id");
 
 		// movies SQL query
 		sqlQuery = "SELECT * FROM `movies` where native_name = '" + nativeName + "' AND year_made = " + yearMade;
