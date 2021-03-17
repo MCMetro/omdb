@@ -61,14 +61,16 @@ public class MovieDriver {
 	
 	public static void createSong(int songID, String title) {
 		//set null values for lyrics and theme for the moment
-		String lyrics = "' '";
-		String theme = "' '";
+		String lyrics = null;
+		String theme = "N/A";
 		try {	
 			//establish connection with database
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement mystmt = conn.createStatement();
+			Statement mystmt = null;
+			mystmt = conn.createStatement();
 			//create insert statement
-			String mySql = "INSERT INTO songs VALUES (" + songID + ", " + title + ");"; //+ " // " + lyrics + ", " + theme + ");";
+			String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", '" + title + "', '" + lyrics + "', '" + theme + "')";
+			
 			//execute query
 			mystmt.executeUpdate(mySql);
 			System.out.println("Added song into songs table!");
