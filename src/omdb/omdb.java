@@ -71,21 +71,8 @@ public class omdb {
 				
 				MovieDriver.deleteMovie(movieID);
 			case "5":
-				System.out.println("\nTesting processMovieSong\n");
-				System.out.println("Enter song ID: ");
-				int songID = scan.nextInt();
-				System.out.println("Enter movie ID: ");
-				scan.nextLine();
-				movieID = scan.nextInt();
-				System.out.println("Enter Native Name: ");
-				scan.nextLine();
-				nativeName = scan.nextLine();
-				System.out.println("Enter English Name: ");
-				englishName = scan.nextLine();
-				System.out.println("Enter year made: ");
-				yearMade = scan.nextInt();
-				
-				MovieDriver.processMovieSong(nativeName, yearMade, movieID, songID, englishName);
+				System.out.println("\nTesting processMovieSong\n");				
+				MovieDriver.processMovieSong();
 				break;
 			}
 			choice = "q";
