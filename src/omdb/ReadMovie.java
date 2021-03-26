@@ -2,7 +2,7 @@ package omdb;
 
 import java.sql.*;
 
-public class readMovie {
+public class ReadMovie {
 
 	// TODO: Change to a boolean for true false and error handling.
 	public static void main(String[] args) {
