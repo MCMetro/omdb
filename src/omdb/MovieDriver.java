@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class MovieDriver {
 
-// TODO: Add error handling (change return types to boolean?)
+// TODO: Add error handling (change return types to boolean?) 
+// TODO: Create a class object for each thing we touch such as movie, song, people
 
 	public static void updateMovie(int movieID, String englishName, int yearMade) {
 		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
