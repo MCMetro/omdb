@@ -52,8 +52,8 @@ public class OMDB {
 				englishName = scan.nextLine();
 				System.out.print("Enter the new movie year: ");
 				yearMade = scan.nextInt();
-				
-				Movie.updateMovie(movieID, englishName, yearMade);
+			
+				MovieDriver.updateMovie(movieID, englishName, yearMade);
 				break;
 			// Read a movie
 			case "3":

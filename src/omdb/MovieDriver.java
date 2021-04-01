@@ -14,7 +14,7 @@ public class MovieDriver {
 // TODO: Create a class object for each thing we touch such as movie, song, people
 
 	
-/*	public static void updateMovie(int movieID, String englishName, int yearMade) {
+	public static void updateMovie(int movieID, String englishName, int yearMade) {
 		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
 		
 		// create connection to database
@@ -38,7 +38,7 @@ public class MovieDriver {
 			System.out.println(ex.getMessage());
 		}
 	}
-*/
+
 	
 	public static void createMovie(int movieID, String englishName, String nativeName, int year) {
 		try {
