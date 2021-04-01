@@ -9,6 +9,7 @@ public class MovieDriver {
 	private ArrayList<MovieSong> msList = new ArrayList<MovieSong>();
 	private ArrayList<Song> songList = new ArrayList<Song>();
 	private ArrayList<Movie> movieList = new ArrayList<Movie>();
+	private ArrayList<MoviePeople> mpList = new ArrayList<MoviePeople>();
 
 // TODO: Add error handling (change return types to boolean?) 
 // TODO: Create a class object for each thing we touch such as movie, song, people
@@ -295,11 +296,37 @@ public class MovieDriver {
 					nativeName + "' AND title = '" + title + "'";
 			Statement esStat = myConn.createStatement();
 			esStat.executeUpdate(sqlUpdate);
+			
 		}
 		//close connection to database
 		myConn.close();
 		System.out.println("processMovieSong Complete!");
 		return true;
 	}
+	    //ET6 Maamoun
+		//movie_song SQL query
+		sqlQuery =  "select movie_id, people_id, role, screen_name\n" + "FROM movie_people m\r\n" + "WHERE movie_id = " + movieID + "\n"
+				+ "AND people_id = " + songID + "AND role = " + Role + "AND screen_name = " + screenName + ";";
+
+		// SQL query execution
+		Statement mpStat = myConn.createStatement();
+		myRs = mpStat.executeQuery(sqlQuery);
+
+		//movie_song does not exist; create movie_song entry
+		if (!myRs.next()) {
+			try {
+				mpList.add(new MoviePeople(movieID, peopleID, Role, screenName));
+				//movie_people created, add execution status to string array
+				myArray[2] = "MP Created";
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		//movie_people exists; ignore entry
+		} else {
+			//movie People not created, add execution status to string array
+			myArray[2] = "MP Ignored";
+	
+	}
+	
 
 }
