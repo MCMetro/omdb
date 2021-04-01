@@ -1,43 +1,45 @@
 package omdb;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MovieDriver {
+	
+	private ArrayList<MovieSong> msList = new ArrayList<MovieSong>();
+	private ArrayList<Song> songList = new ArrayList<Song>();
+	private ArrayList<Movie> movieList = new ArrayList<Movie>();
 
 // TODO: Add error handling (change return types to boolean?) 
 // TODO: Create a class object for each thing we touch such as movie, song, people
 
-//	public static void updateMovie(int movieID, String englishName, int yearMade) {
-//		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
-//		
-//		// Set local variables to user input data.
-//		int id = movieID;
-//		String movie_name = englishName;
-//		int movie_year = yearMade;
-//		// create connection to database
-//		// PreparedStatement allows for repeated use of mysql statement if needed.
-//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-//				PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
-//
-//			// prepare data for update
-//			pstmt.setString(1, movie_name);
-//			pstmt.setInt(2, movie_year);
-//			pstmt.setInt(3, id);
-//
-//			// print out rows affected
-//			int rowAffected = pstmt.executeUpdate();
-//			System.out.println("Movie Updated Successfully!");
-//			System.out.println(String.format("Row affected %d", rowAffected));
-//
-//			conn.close();
-//
-//		} catch (SQLException ex) {
-//			System.out.println(ex.getMessage());
-//		}
-//	}
 	
+/*	public static void updateMovie(int movieID, String englishName, int yearMade) {
+		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
+		
+		// create connection to database
+		// PreparedStatement allows for repeated use of mysql statement if needed.
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+				PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
 
+			// prepare data for update
+			pstmt.setString(1, englishName);
+			pstmt.setInt(2, yearMade);
+			pstmt.setInt(3, movieID);
+
+			// print out rows affected
+			int rowAffected = pstmt.executeUpdate();
+			System.out.println("Movie Updated Successfully!");
+			System.out.println(String.format("Row affected %d", rowAffected));
+
+			conn.close();
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+*/
+	
 	public static void createMovie(int movieID, String englishName, String nativeName, int year) {
 		try {
 			// STEP 1: Start Connection to the Database
@@ -60,59 +62,8 @@ public class MovieDriver {
 			ex.printStackTrace();
 		}
 	}
-	
-	public static void createSong(int songID, String title) { 
-		//set null and "N/A" values for lyrics and themes respectively
-		String lyrics = null;
-		String theme = "N/A";
-		try {	
-			//establish connection with database
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement mystmt = null;
-			mystmt = conn.createStatement();
-			//create insert statement
-			String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", '" + title + "', '" + lyrics + "', '" + theme + "')";
-			
-			//execute query
-			mystmt.executeUpdate(mySql);
-			//System.out.println("Added song into songs table!");
-			//close connection
-			conn.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	//boolean method which checks if song with title 'title' exists in songs table
-	//returns true if song exists, false if song does not exist
-	public static boolean checkSong(String title) {
-		boolean b = false;
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement myStat = conn.createStatement();
-			
-			//songs SQL query; check if title exists in songs table
-			String sqlQuery = "SELECT * FROM songs WHERE title = '" + title + "'";
-			
-			//songs SQL query resultset
-			ResultSet songsResults = myStat.executeQuery(sqlQuery);
-			
-			//check if songsResults query is empty; title does not exist in songs table
-			if (!songsResults.next()) {
-				b = false;
-			}
-			//check if song exists in songs table
-			if (songsResults.next()) {
-				b = true;
-			}
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return b;
-	}
 
+	
 	public static void readMovie(int movieID) {
 		try {
 			// Establishing connection to database
@@ -157,6 +108,7 @@ public class MovieDriver {
 		}
 	}
 
+
 	public static void deleteMovie(int movieID) {
 		try {
 			// STEP 1: Start Connection to the Database
@@ -178,28 +130,11 @@ public class MovieDriver {
 			ex.printStackTrace();
 		}
 	}
+
 	
-	//method to duplicate apostrophe in title
-	public static String addApostrophe(String title, int position) {
-		//apostrophe char
-		char ch = '\'';
-		int len = title.length();
-		//create chararray with title length + 1;
-	    char[] charArray = new char[len + 1];
-	    //copy string values upto index of single quote into the charArray
-	    title.getChars(0, position, charArray, 0);
-	    //add addition single quote after first single quote
-	    charArray[position] = ch;
-	    //copy rest of string values into the charArray
-	    title.getChars(position, len, charArray, position + 1); 
-	    //return string value of the charArray
-	    return new String(charArray);
-	    //code details found at https://www.baeldung.com/java-add-character-to-string
-	}
-	
-	public static boolean processMovieSong() throws SQLException {
+	public boolean processMovieSong() throws SQLException {
 		
-		//create varaibles for movieID, songID and englishName
+		//create variables for movieID, songID and englishName
 		int movieID = 0;
 		int songID = 0;
 		String englishName = "";
@@ -256,7 +191,7 @@ public class MovieDriver {
 					movieID = currentMovieID;
 					englishName = nativeName;
 					//createMovie entry at end of the table
-					createMovie(movieID, englishName, nativeName, yearMade);
+					movieList.add(new Movie(movieID, englishName, nativeName, yearMade));
 					//movie created, add execution status to string array
 					myArray[0] = "M Created";
 	
@@ -267,17 +202,20 @@ public class MovieDriver {
 			}
 			
 			// TODO: Case 3: Mahad
+			
 			//get index of single quote from title
 			int position = title.indexOf('\'');
 			//check if title has single quote in it
 			if (position >= 0) {
 				//if title has apostrophe, add addition single quote at index
 				String temp;
-				temp = addApostrophe(title, position);
+				temp = Song.addApostrophe(title, position);
 				title = temp;
 			}
+			
 			//check if songsResults query is empty; title does not exist in songs table
-			if (!checkSong(title)) {
+			
+			if (!Song.checkSong(title)) {
 				try {
 					//create song in songs table
 					Statement stmt = myConn.createStatement();
@@ -295,7 +233,7 @@ public class MovieDriver {
 					//update song_id value
 					songID = currentSongID;
 					//createSong at end of songs table
-					createSong(songID, title);
+					songList.add(new Song(songID, title));
 					//song created, add execution status to string array
 					myArray[1] = "S Created";
 	
@@ -303,13 +241,10 @@ public class MovieDriver {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-			}
-			
-			// TODO: Case 4: Mahad
-			//check if song exists in songs table
-			if (checkSong(title)) {
+				
+			//title exists in song table, ignore entry
+			} else {
 				try {
-					//System.out.println("Song already exists in songs table. Create entry ignored");
 					Statement stmt = myConn.createStatement();
 					String myQuery = "SELECT * FROM songs WHERE title = '" + title + "'";
 					ResultSet Rs = stmt.executeQuery(myQuery);
@@ -336,9 +271,7 @@ public class MovieDriver {
 			//movie_song does not exist; create movie_song entry
 			if (!myRs.next()) {
 				try {
-					sqlQuery = "INSERT INTO movie_song VALUES (" + movieID + ", " + songID + ")";
-					Statement msStat2 = myConn.createStatement();
-					msStat2.executeUpdate(sqlQuery);
+					msList.add(new MovieSong(movieID, songID));
 					//movie_song created, add execution status to string array
 					myArray[2] = "MS Created";
 				} catch (Exception e) {

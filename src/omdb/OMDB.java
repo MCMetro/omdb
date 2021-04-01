@@ -53,7 +53,7 @@ public class OMDB {
 				System.out.print("Enter the new movie year: ");
 				yearMade = scan.nextInt();
 				
-				MovieDriver.updateMovie(movieID, englishName, yearMade);
+				Movie.updateMovie(movieID, englishName, yearMade);
 				break;
 			// Read a movie
 			case "3":
@@ -71,8 +71,9 @@ public class OMDB {
 				
 				MovieDriver.deleteMovie(movieID);
 			case "5":
-				System.out.println("\nTesting processMovieSong\n");				
-				MovieDriver.processMovieSong();
+				System.out.println("\nTesting processMovieSong\n");
+				MovieDriver test = new MovieDriver();
+				test.processMovieSong();
 				break;
 			}
 			choice = "q";

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Movie {
 	private int movieID;
@@ -16,10 +17,28 @@ public class Movie {
 	private String plot;
 	private String tagLine;
 	
-	public Movie() {
-		// TODO Auto-generated constructor stub
+	public Movie(int movieID, String englishName, String nativeName, int year) {
+		this.movieID = movieID;
+		this.englishName = englishName;
+		this.nativeName = nativeName;
+		this.yearMade = year;
+		try {
+			// STEP 1: Start Connection to the Database
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			Statement stmt = null;
+			// STEP 2: Execute a query
+			stmt = conn.createStatement();
+			// STEP 3: Insert Values
+			String sql = "INSERT INTO movies " + "VALUES (" + movieID + ", '" + englishName + "', '" + nativeName
+					+ "', " + year + ")";
+			stmt.executeUpdate(sql);
+			// STEP 4: Close the connection
+			conn.close();
+			// STEP 5: Catch Errors
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
-
 	public int getMovieID() {
 		return movieID;
 	}
@@ -92,7 +111,7 @@ public class Movie {
 		this.tagLine = tagLine;
 	}
 	
-	public void updateMovie(int movieID, String englishName, int yearMade) {
+	public static void updateMovie(int movieID, String englishName, int yearMade) {
 		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
 		
 		// create connection to database
@@ -108,15 +127,13 @@ public class Movie {
 			// print out rows affected
 			int rowAffected = pstmt.executeUpdate();
 			System.out.println("Movie Updated Successfully!");
-			System.out.println(String.format("Row affected %d", rowAffected));
+			System.out.println(String.format("Rows affected %d", rowAffected));
 
 			conn.close();
 
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		
-		Movie mymovie = new Movie();
 	}
 
 }
