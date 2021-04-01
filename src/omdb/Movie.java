@@ -92,29 +92,31 @@ public class Movie {
 		this.tagLine = tagLine;
 	}
 	
-//	public void updateMovie(int movieID, String englishName, int yearMade) {
-//		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
-//		
-//		// create connection to database
-//		// PreparedStatement allows for repeated use of mysql statement if needed.
-//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-//				PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
-//
-//			// prepare data for update
-//			pstmt.setString(1, englishName);
-//			pstmt.setInt(2, yearMade);
-//			pstmt.setInt(3, movieID);
-//
-//			// print out rows affected
-//			int rowAffected = pstmt.executeUpdate();
-//			System.out.println("Movie Updated Successfully!");
-//			System.out.println(String.format("Row affected %d", rowAffected));
-//
-//			conn.close();
-//
-//		} catch (SQLException ex) {
-//			System.out.println(ex.getMessage());
-//		}
-//	}
-//
+	public void updateMovie(int movieID, String englishName, int yearMade) {
+		String sqlUpdate = "UPDATE movies " + "SET english_name = ?, year_made = ? " + "WHERE movie_id = ?";
+		
+		// create connection to database
+		// PreparedStatement allows for repeated use of mysql statement if needed.
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+				PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
+
+			// prepare data for update
+			pstmt.setString(1, englishName);
+			pstmt.setInt(2, yearMade);
+			pstmt.setInt(3, movieID);
+
+			// print out rows affected
+			int rowAffected = pstmt.executeUpdate();
+			System.out.println("Movie Updated Successfully!");
+			System.out.println(String.format("Row affected %d", rowAffected));
+
+			conn.close();
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+		
+		Movie mymovie = new Movie();
+	}
+
 }
