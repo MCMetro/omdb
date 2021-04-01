@@ -1,4 +1,11 @@
 package omdb;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 //test
 public class People {
 	private int peopleID;
@@ -9,8 +16,56 @@ public class People {
 	private String gender;
 	private String imageName;
 
-	public People() {
-		
+	public People(int peopleID, String stageName) {
+		this.peopleID = peopleID;
+		this.stageName = stageName;
+		firstName = "FirstName";
+		middleName = "MiddleName";
+		lastName = "LastName";
+		gender = "Gender";
+		imageName = "ImageName";
+		try {
+			// STEP 1: Start Connection to the Database
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			Statement stmt = null;
+			// STEP 2: Execute a query
+			stmt = conn.createStatement();
+			// STEP 3: Insert Values
+			String sql = "INSERT INTO people " + "VALUES (" + peopleID + ", '" + stageName + "', '" + firstName + "', "
+					+ "'" + middleName + "', '" + lastName + "', '" + gender + "', '" + imageName + "')";
+			stmt.executeUpdate(sql);
+			// STEP 4: Close the connection
+			conn.close();
+			// STEP 5: Catch Errors
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public static boolean checkPeople(String stageName) {
+		boolean b = false;
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+			Statement myStat = conn.createStatement();
+			
+			//people SQL query; check if stage_name exists in people table
+			String sqlQuery = "SELECT * FROM people WHERE stage_name = '" + stageName + "'";
+			
+			//people SQL query resultset
+			ResultSet peopleResults = myStat.executeQuery(sqlQuery);
+			
+			//check if peopleResults query is empty; stage does not exist in people table
+			if (!peopleResults.next()) {
+				b = false;
+			} else {
+				b = true;
+			}
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
 	}
 
 	public int getPeopleID() {

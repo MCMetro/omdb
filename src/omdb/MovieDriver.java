@@ -9,8 +9,9 @@ public class MovieDriver {
 	private ArrayList<MovieSong> msList = new ArrayList<MovieSong>();
 	private ArrayList<Song> songList = new ArrayList<Song>();
 	private ArrayList<Movie> movieList = new ArrayList<Movie>();
+	private ArrayList<People> peopleList = new ArrayList<People>();
 	private ArrayList<MoviePeople> mpList = new ArrayList<MoviePeople>();
-
+	
 // TODO: Add error handling (change return types to boolean?) 
 // TODO: Create a class object for each thing we touch such as movie, song, people
 
@@ -296,37 +297,177 @@ public class MovieDriver {
 					nativeName + "' AND title = '" + title + "'";
 			Statement esStat = myConn.createStatement();
 			esStat.executeUpdate(sqlUpdate);
-			
 		}
 		//close connection to database
 		myConn.close();
 		System.out.println("processMovieSong Complete!");
 		return true;
 	}
-	    //ET6 Maamoun
-		//movie_song SQL query
-		sqlQuery =  "select movie_id, people_id, role, screen_name\n" + "FROM movie_people m\r\n" + "WHERE movie_id = " + movieID + "\n"
-				+ "AND people_id = " + songID + "AND role = " + Role + "AND screen_name = " + screenName + ";";
+	
+	//Process mpr_test_data table
+	public boolean processMoviePeople() throws SQLException {
+		
+		//create variables for movieID, songID and englishName
+		int movieID = 0;
+		int peopleID = 0;
+		String englishName = "";
+		
+		// Establishing connection to database
+		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+
+		// statement creation
+		Statement myStat = myConn.createStatement();
+
+		// SQL query creation
+		String sqlQuery = "select * \n" + "FROM mpr_test_data m\r\n";
 
 		// SQL query execution
-		Statement mpStat = myConn.createStatement();
-		myRs = mpStat.executeQuery(sqlQuery);
+		ResultSet myTestData = myStat.executeQuery(sqlQuery);
 
-		//movie_song does not exist; create movie_song entry
-		if (!myRs.next()) {
-			try {
-				mpList.add(new MoviePeople(movieID, peopleID, Role, screenName));
-				//movie_people created, add execution status to string array
-				myArray[2] = "MP Created";
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		//movie_people exists; ignore entry
-		} else {
-			//movie People not created, add execution status to string array
-			myArray[2] = "MP Ignored";
+		//loop through ms_test_data, gather values per row
+		while(myTestData.next()) {
+
+			int mprID = myTestData.getInt("id");
+			String stageName = myTestData.getString("stage_name");
+			String nativeName = myTestData.getString("native_name");
+			int yearMade = myTestData.getInt("year_made");
+			String role = myTestData.getString("role");
+			String screenName = myTestData.getString("screen_name");
+			//string array to hold value of execution status by case
+			String[] myArray = new String[3]; 
+			ResultSet myRs;
+		
 	
+			// TODO: Case 1: Aziz | Maamoun
+			//check if movie does not exist and create if needed
+			try {
+				String mysqlQuery = "SELECT * FROM `movies` where native_name = '" + nativeName + "' AND year_made = " + yearMade;;
+				Statement movieStat = myConn.createStatement();
+				ResultSet myResults = movieStat.executeQuery(mysqlQuery);
+
+				if (myResults.next()) {
+					//movie creation ignored, add execution status to string array
+					myArray[0] = "M Ignored";
+					//movie already exists, grab value of movieID from table and update variable
+					int realMovieID = myResults.getInt("movie_id");
+					movieID = realMovieID;
+					
+					
+					//Case 2: 
+				} else {
+					//Query to find last movie_id value in movie table
+					String maxMovieIDQ = "SELECT * FROM movies WHERE movie_id = (SELECT max(movie_id) FROM movies)";
+					Statement movieMax = myConn.createStatement();
+					ResultSet maxMovieResult = movieMax.executeQuery(maxMovieIDQ);
+					maxMovieResult.next();
+					int maxMovieID = maxMovieResult.getInt("movie_id");
+					//increment maxMovieID by 1
+					int currentMovieID = maxMovieID + 1;
+					//set values of movieID and englishName
+					movieID = currentMovieID;
+					englishName = nativeName;
+					//createMovie entry at end of the table
+					movieList.add(new Movie(movieID, englishName, nativeName, yearMade));
+					//movie created, add execution status to string array
+					myArray[0] = "M Created";
+	
+				}
+				// STEP 6: Catch Errors
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			
+			// TODO: Case 3: Mahad
+			
+			
+			//check if person with stageName exists in people table
+			//create people entry if person does not exist else ignore
+			
+			if (!People.checkPeople(stageName)) {
+				try {
+					//create people in songs table
+					Statement stmt = myConn.createStatement();
+					
+					//people SQL query for last row
+					String myQuery = "SELECT * FROM people WHERE people_id = (SELECT max(people_id) FROM people)";
+					
+					//get query results
+					ResultSet Rs = stmt.executeQuery(myQuery);
+					Rs.next();
+					//get value of last people_id in people table
+					int maxPeopleId = Rs.getInt("people_id");
+					//increment value by 1
+					int currentPeopleID = maxPeopleId + 1;
+					//update people_id value
+					peopleID = currentPeopleID;
+					//create new people at last row
+					peopleList.add(new People(peopleID, stageName));
+					//people created, add execution status to string array
+					myArray[1] = "P Created";
+	
+					
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
+			//stageName exists in people table, ignore entry
+			} else {
+				try {
+					Statement stmt = myConn.createStatement();
+					String myQuery = "SELECT * FROM people WHERE stage_name = '" + stageName + "'";
+					ResultSet Rs = stmt.executeQuery(myQuery);
+					Rs.next();
+					int realPeopleId = Rs.getInt("people_id");
+					peopleID = realPeopleId;
+					myArray[1] = "P Ignored";
+					
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
+			}
+			
+			// Case 5: Max
+			//movie_people SQL query
+			sqlQuery = "select *\n" + "FROM movie_people m\r\n" + "WHERE movie_id = " + movieID + "\n"
+					+ "AND people_id = " + peopleID + " AND role = '" + role + "' AND screen_name = "
+							+ "'" + screenName + "';";
+
+			// SQL query execution
+			Statement mpStat = myConn.createStatement();
+			myRs = mpStat.executeQuery(sqlQuery);
+	
+			//movie_people does not exist; create movie_people entry
+			if (!myRs.next()) {
+				try {
+					mpList.add(new MoviePeople(movieID, peopleID, role, screenName));
+					//movie_people created, add execution status to string array
+					myArray[2] = "R Created";
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			//movie_people exists; ignore entry
+			} else {
+				//movie people not created, add execution status to string array
+				myArray[2] = "R Ignored";
+			}
+	
+			// TODO: Case 7: Group
+			//Update the Execution Status
+			//Create string based on which cases were implemented
+			String myExecutionStatus = myArray[0] + ", " + myArray[1] + ", " + myArray[2];
+			//update execution status on current row with string
+			String sqlUpdate = "UPDATE mpr_test_data " + 
+					"SET execution_status = '" + myExecutionStatus + "' WHERE id = " + mprID + ";";
+			Statement esStat = myConn.createStatement();
+			esStat.executeUpdate(sqlUpdate);
+		}
+		//close connection to database
+		myConn.close();
+		System.out.println("processMoviePeople Complete!");
+		return true;
 	}
+	
 	
 
 }
