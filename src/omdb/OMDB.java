@@ -11,6 +11,7 @@ public class OMDB {
 		String englishName;
 		String nativeName;
 		int yearMade;
+		MovieDriver test = new MovieDriver();
 
 		// Present the user with a menu
 		System.out.println("Choose a Database Operation:");
@@ -18,7 +19,8 @@ public class OMDB {
 		System.out.println("2. Update a movie in the database.");
 		System.out.println("3. Read a movie from the database.");
 		System.out.println("4. Delete a movie from the database.");
-		System.out.println("5. Run processMovieSong");
+		System.out.println("5. Run processMovieSong.");
+		System.out.println("6. Run processMoviePeople.");
 		System.out.println("q. Exit the program");
 		System.out.print("\nEnter your choice: ");
 		Scanner scan = new Scanner(System.in);
@@ -72,9 +74,11 @@ public class OMDB {
 				MovieDriver.deleteMovie(movieID);
 			case "5":
 				System.out.println("\nTesting processMovieSong\n");
-				MovieDriver test = new MovieDriver();
 				test.processMovieSong();
 				break;
+			case "6":
+				System.out.println("Testing processMoviePeople\n");
+				test.processMoviePeople();
 			}
 			choice = "q";
 		} while (choice != "q");

@@ -340,6 +340,24 @@ public class MovieDriver {
 	
 			// TODO: Case 1: Aziz | Maamoun
 			//check if movie does not exist and create if needed
+			
+			//get index of single quote from nativeName
+			int position = nativeName.indexOf('\'');
+			//check if title has single quote in it
+			if (position >= 0) {
+				//if title has apostrophe, add addition single quote at index
+				String temp;
+				temp = Song.addApostrophe(nativeName, position);
+				nativeName = temp;
+			}
+			position = screenName.indexOf('\'');
+			if (position >= 0) {
+				//if title has apostrophe, add addition single quote at index
+				String temp;
+				temp = Song.addApostrophe(screenName, position);
+				screenName = temp;
+			}
+			
 			try {
 				String mysqlQuery = "SELECT * FROM `movies` where native_name = '" + nativeName + "' AND year_made = " + yearMade;;
 				Statement movieStat = myConn.createStatement();
