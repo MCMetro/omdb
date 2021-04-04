@@ -11,6 +11,7 @@ public class MovieDriver {
 	private ArrayList<Movie> movieList = new ArrayList<Movie>();
 	private ArrayList<People> peopleList = new ArrayList<People>();
 	private ArrayList<MoviePeople> mpList = new ArrayList<MoviePeople>();
+	private ArrayList<SongPeople> spList = new ArrayList<SongPeople>();
 	
 // TODO: Add error handling (change return types to boolean?) 
 // TODO: Create a class object for each thing we touch such as movie, song, people
@@ -159,6 +160,9 @@ public class MovieDriver {
 			String title = myTestData.getString("title");
 			String nativeName = myTestData.getString("native_name");
 			int yearMade = myTestData.getInt("year_made");
+			//updated columns for mspr_test_data
+			String stageName = myTestData.getString("stage_name");
+			String role = myTestData.getString("role");
 			//string array to hold value of execution status by case
 			String[] myArray = new String[3]; 
 			ResultSet myRs;
