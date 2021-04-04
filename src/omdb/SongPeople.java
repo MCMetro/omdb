@@ -17,7 +17,7 @@ public class SongPeople {
 		this.role = role;
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			String sqlQuery = "INSERT INTO people_song VALUES (" + songID + ", " + peopleID + ", " + role ")";
+			String sqlQuery = "INSERT INTO people_song VALUES (" + songID + ", " + peopleID + ", " + role + ")";
 			Statement msStat2 = conn.createStatement();
 			msStat2.executeUpdate(sqlQuery);
 			conn.close();
