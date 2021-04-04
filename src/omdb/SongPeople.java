@@ -15,7 +15,7 @@ public class SongPeople {
 		this.songID = songID;
 		this.peopleID = peopleID;
 		this.role = role;
-		try {
+/*		try {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
 			String sqlQuery = "INSERT INTO people_song VALUES (" + songID + ", " + peopleID + ", " + role + ")";
 			Statement msStat2 = conn.createStatement();
@@ -24,6 +24,7 @@ public class SongPeople {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
+*/
 	}
 	//songID getter method
 	public int getSongID() {

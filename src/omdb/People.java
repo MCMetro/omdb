@@ -19,27 +19,7 @@ public class People {
 	public People(int peopleID, String stageName) {
 		this.peopleID = peopleID;
 		this.stageName = stageName;
-		firstName = "FirstName";
-		middleName = "MiddleName";
-		lastName = "LastName";
-		gender = "Gender";
-		imageName = "ImageName";
-		try {
-			// STEP 1: Start Connection to the Database
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement stmt = null;
-			// STEP 2: Execute a query
-			stmt = conn.createStatement();
-			// STEP 3: Insert Values
-			String sql = "INSERT INTO people " + "VALUES (" + peopleID + ", '" + stageName + "', '" + firstName + "', "
-					+ "'" + middleName + "', '" + lastName + "', '" + gender + "', '" + imageName + "')";
-			stmt.executeUpdate(sql);
-			// STEP 4: Close the connection
-			conn.close();
-			// STEP 5: Catch Errors
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+
 	}
 	
 	public static boolean checkPeople(String stageName) {

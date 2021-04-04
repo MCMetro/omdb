@@ -149,7 +149,7 @@ public class MovieDriver {
 		Statement myStat = myConn.createStatement();
 
 		// SQL query creation
-		String sqlQuery = "select * \n" + "FROM ms_test_data m\r\n";
+		String sqlQuery = "select * \n" + "FROM mspr_test_data m\r\n";
 
 		// SQL query execution
 		ResultSet myTestData = myStat.executeQuery(sqlQuery);
@@ -198,6 +198,14 @@ public class MovieDriver {
 					englishName = nativeName;
 					//createMovie entry at end of the table
 					movieList.add(new Movie(movieID, englishName, nativeName, yearMade));
+					Statement stmt = null;
+					// STEP 2: Execute a query
+					stmt = myConn.createStatement();
+					// STEP 3: Insert Values
+					String sql = "INSERT INTO movies " + "VALUES (" + movieID + ", '" + englishName + "', '" + nativeName
+							+ "', " + yearMade + ")";
+					stmt.executeUpdate(sql);
+
 					//movie created, add execution status to string array
 					myArray[0] = "M Created";
 	
@@ -224,13 +232,13 @@ public class MovieDriver {
 			if (!Song.checkSong(title)) {
 				try {
 					//create song in songs table
-					Statement stmt = myConn.createStatement();
+					Statement stmt2 = myConn.createStatement();
 					
 					//songs SQL query for last row
 					String myQuery = "SELECT * FROM songs WHERE song_id = (SELECT max(song_id) FROM songs)";
 					
 					//get query results
-					ResultSet Rs = stmt.executeQuery(myQuery);
+					ResultSet Rs = stmt2.executeQuery(myQuery);
 					Rs.next();
 					//get value of last song_id in songs table
 					int maxSongId = Rs.getInt("song_id");
@@ -240,20 +248,30 @@ public class MovieDriver {
 					songID = currentSongID;
 					//createSong at end of songs table
 					songList.add(new Song(songID, title));
+					String lyrics = null;
+					String theme = "N/A";
+					
+					Statement mystmt = null;
+					mystmt = myConn.createStatement();
+					//create insert statement
+					String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", '" + title + "', '" + lyrics + "', '" + theme + "')";
+					
+					//execute query
+					mystmt.executeUpdate(mySql);
 					//song created, add execution status to string array
 					myArray[1] = "S Created";
-	
 					
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
+
 				
 			//title exists in song table, ignore entry
 			} else {
 				try {
-					Statement stmt = myConn.createStatement();
+					Statement stmt3 = myConn.createStatement();
 					String myQuery = "SELECT * FROM songs WHERE title = '" + title + "'";
-					ResultSet Rs = stmt.executeQuery(myQuery);
+					ResultSet Rs = stmt3.executeQuery(myQuery);
 					Rs.next();
 					int realSongId = Rs.getInt("song_id");
 					songID = realSongId;
@@ -278,6 +296,11 @@ public class MovieDriver {
 			if (!myRs.next()) {
 				try {
 					msList.add(new MovieSong(movieID, songID));
+					Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+					sqlQuery = "INSERT INTO movie_song VALUES (" + movieID + ", " + songID + ")";
+					Statement msStat2 = conn.createStatement();
+					msStat2.executeUpdate(sqlQuery);
+					conn.close();
 					//movie_song created, add execution status to string array
 					myArray[2] = "MS Created";
 				} catch (Exception e) {
@@ -296,7 +319,7 @@ public class MovieDriver {
 			//Create string based on which cases were implemented
 			String myExecutionStatus = myArray[0] + ", " + myArray[1] + ", " + myArray[2];
 			//update execution status on current row with string
-			String sqlUpdate = "UPDATE ms_test_data " + 
+			String sqlUpdate = "UPDATE mspr_test_data " + 
 					"SET execution_status = '" + myExecutionStatus + "' WHERE native_name = '" +
 					nativeName + "' AND title = '" + title + "'";
 			Statement esStat = myConn.createStatement();
@@ -341,8 +364,7 @@ public class MovieDriver {
 			String[] myArray = new String[3]; 
 			ResultSet myRs;
 		
-	
-			// TODO: Case 1: Aziz | Maamoun
+
 			//check if movie does not exist and create if needed
 			
 			//get index of single quote from nativeName
@@ -390,6 +412,15 @@ public class MovieDriver {
 					englishName = nativeName;
 					//createMovie entry at end of the table
 					movieList.add(new Movie(movieID, englishName, nativeName, yearMade));
+
+					Statement stmt4 = null;
+					// STEP 2: Execute a query
+					stmt4 = myConn.createStatement();
+					// STEP 3: Insert Values
+					String sql = "INSERT INTO movies " + "VALUES (" + movieID + ", '" + englishName + "', '" + nativeName
+							+ "', " + yearMade + ")";
+					stmt4.executeUpdate(sql);
+
 					//movie created, add execution status to string array
 					myArray[0] = "M Created";
 	
@@ -398,8 +429,6 @@ public class MovieDriver {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			
-			// TODO: Case 3: Mahad
 			
 			
 			//check if person with stageName exists in people table
@@ -424,6 +453,20 @@ public class MovieDriver {
 					peopleID = currentPeopleID;
 					//create new people at last row
 					peopleList.add(new People(peopleID, stageName));
+					String firstName = "FirstName";
+					String middleName = "MiddleName";
+					String lastName = "LastName";
+					String gender = "Gender";
+					String imageName = "ImageName";
+
+					Statement stmt6 = null;
+					// STEP 2: Execute a query
+					stmt6 = myConn.createStatement();
+					// STEP 3: Insert Values
+					String sql = "INSERT INTO people " + "VALUES (" + peopleID + ", '" + stageName + "', '" + firstName + "', "
+							+ "'" + middleName + "', '" + lastName + "', '" + gender + "', '" + imageName + "')";
+					stmt6.executeUpdate(sql);
+
 					//people created, add execution status to string array
 					myArray[1] = "P Created";
 	
@@ -449,7 +492,7 @@ public class MovieDriver {
 				
 			}
 			
-			// Case 5: Max
+
 			//movie_people SQL query
 			sqlQuery = "select *\n" + "FROM movie_people m\r\n" + "WHERE movie_id = " + movieID + "\n"
 					+ "AND people_id = " + peopleID + " AND role = '" + role + "' AND screen_name = "
@@ -463,6 +506,12 @@ public class MovieDriver {
 			if (!myRs.next()) {
 				try {
 					mpList.add(new MoviePeople(movieID, peopleID, role, screenName));
+
+					String sqlQuery1 = "INSERT INTO movie_people VALUES (" + movieID + ", " + peopleID + ", "
+							+ "'" + role + "', '" + screenName + "')";
+					Statement msStat2 = myConn.createStatement();
+					msStat2.executeUpdate(sqlQuery1);
+
 					//movie_people created, add execution status to string array
 					myArray[2] = "R Created";
 				} catch (Exception e) {
@@ -474,7 +523,7 @@ public class MovieDriver {
 				myArray[2] = "R Ignored";
 			}
 	
-			// TODO: Case 7: Group
+
 			//Update the Execution Status
 			//Create string based on which cases were implemented
 			String myExecutionStatus = myArray[0] + ", " + myArray[1] + ", " + myArray[2];
@@ -489,7 +538,5 @@ public class MovieDriver {
 		System.out.println("processMoviePeople Complete!");
 		return true;
 	}
-	
-	
 
 }

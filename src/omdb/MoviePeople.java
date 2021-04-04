@@ -16,16 +16,6 @@ public class MoviePeople {
 		this.role = role;
 		this.screenName = screenName;
 
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			String sqlQuery = "INSERT INTO movie_people VALUES (" + movieID + ", " + peopleID + ", "
-					+ "'" + role + "', '" + screenName + "')";
-			Statement msStat2 = conn.createStatement();
-			msStat2.executeUpdate(sqlQuery);
-			conn.close();
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 	
 	public int getMovieID() {

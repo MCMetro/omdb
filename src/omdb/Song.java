@@ -19,22 +19,6 @@ public class Song {
 		this.title = title;
 		this.lyrics = lyrics;
 		this.theme = theme;
-		try {	
-			//establish connection with database
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement mystmt = null;
-			mystmt = conn.createStatement();
-			//create insert statement
-			String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", '" + title + "', '" + lyrics + "', '" + theme + "')";
-			
-			//execute query
-			mystmt.executeUpdate(mySql);
-			//System.out.println("Added song into songs table!");
-			//close connection
-			conn.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 	
 	//Constructor method with songID and title arguments
@@ -42,24 +26,6 @@ public class Song {
 		this.songID = songID;
 		this.title = title;
 		//set null and "N/A" values for lyrics and themes respectively
-		String lyrics = null;
-		String theme = "N/A";
-		try {	
-			//establish connection with database
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement mystmt = null;
-			mystmt = conn.createStatement();
-			//create insert statement
-			String mySql = "INSERT INTO songs " + "VALUES (" + songID + ", '" + title + "', '" + lyrics + "', '" + theme + "')";
-			
-			//execute query
-			mystmt.executeUpdate(mySql);
-			//System.out.println("Added song into songs table!");
-			//close connection
-			conn.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 	
 	public static boolean checkSong(String title) {
