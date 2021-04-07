@@ -22,23 +22,9 @@ public class Movie {
 		this.englishName = englishName;
 		this.nativeName = nativeName;
 		this.yearMade = year;
-		try {
-			// STEP 1: Start Connection to the Database
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
-			Statement stmt = null;
-			// STEP 2: Execute a query
-			stmt = conn.createStatement();
-			// STEP 3: Insert Values
-			String sql = "INSERT INTO movies " + "VALUES (" + movieID + ", '" + englishName + "', '" + nativeName
-					+ "', " + year + ")";
-			stmt.executeUpdate(sql);
-			// STEP 4: Close the connection
-			conn.close();
-			// STEP 5: Catch Errors
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
+	
+	
 	public int getMovieID() {
 		return movieID;
 	}
