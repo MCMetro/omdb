@@ -12,6 +12,8 @@ public class MovieDriver {
 	private ArrayList<People> peopleList = new ArrayList<People>();
 	private ArrayList<MoviePeople> mpList = new ArrayList<MoviePeople>();
 	private ArrayList<SongPeople> spList = new ArrayList<SongPeople>();
+	private ArrayList<MovieAnagrams> alist = new ArrayList<MovieAnagrams>();
+	
 	
 // TODO: Add error handling (change return types to boolean?) 
 // TODO: Create a class object for each thing we touch such as movie, song, people
