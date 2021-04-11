@@ -1,5 +1,6 @@
 package omdb;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -638,6 +639,47 @@ public class MovieDriver {
 		myConn.close();
 		System.out.println("processMoviePeople Complete!");
 		return true;
+	}
+	
+	//processing anagrams from CSV file
+	public boolean processMovieAnagrams() throws SQLException{
+		int movieID = 0;
+		String anagrams = null;
+		String nativeName = null;
+		int year = 0;
+		
+		// Establishing connection to database
+		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb", "root", "");
+
+		// statement creation
+		Statement myStat = myConn.createStatement();
+		
+		public static void main(String[] args) throws Exception {
+			
+		    // pass the path to the file as a parameter
+		    File file =
+		      new File("");
+		    Scanner sc = new Scanner(file);
+		    
+		    while (sc.hasNextLine()) {
+		        System.out.println(sc.nextLine());
+		    }
+		    
+		    sc.close();
+		  }
+
+		//loop through movie_anagrams, gather values per row
+		while() {
+			
+			// SQL query creation
+			String sqlQuery = "select * \n" + "FROM movie_anagrmas";
+
+			// SQL query execution
+			ResultSet myTestData = myStat.executeQuery(sqlQuery);
+			
+			
+		}
+		
 	}
 
 }
