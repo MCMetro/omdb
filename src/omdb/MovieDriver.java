@@ -659,7 +659,8 @@ public class MovieDriver {
 			while ((line = br.readLine()) != null) {
 				String[] tokens = line.split(",");
 				nativeName = tokens[0];
-				year = Integer.parseInt(tokens[1].trim());
+				String temp = tokens[1];
+				year = Integer.parseInt(temp);
 				anagram = tokens[2];
 				
 				
