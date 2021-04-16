@@ -652,11 +652,12 @@ public class MovieDriver {
 		File file = new File("IT8 test file.csv");
 
 		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line = "";
 		
 
 		try {
-			while (br.readLine() != null) {
-				String[] tokens = br(",");
+			while ((line = br.readLine()) != null) {
+				String[] tokens = line.split(",");
 				nativeName = tokens[0];
 				year = Integer.parseInt(tokens[1].trim());
 				anagram = tokens[2];
