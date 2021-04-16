@@ -1,6 +1,10 @@
 package omdb;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -654,31 +658,54 @@ public class MovieDriver {
 		// statement creation
 		Statement myStat = myConn.createStatement();
 		
-		public static void main(String[] args) throws Exception {
 			
 		    // pass the path to the file as a parameter
-		    File file =
-		      new File("");
-		    Scanner sc = new Scanner(file);
+		    File file =new File("../IT8 test file.csv");
 		    
-		    while (sc.hasNextLine()) {
-		        System.out.println(sc.nextLine());
-		    }
+		    BufferedReader br = null;
 		    
-		    sc.close();
-		  }
+			    try {
+					while (br.readLine() != null) {
+						  String movieName;
+						  int movieYear;
+						  String anagram;
+						  
+						  String[] tokens = br.readLine().split(",");
+						  movieName = tokens[0];
+						  movieYear = Integer.parseInt(tokens[1].trim());
+						  anagram = tokens[2];
+						  
+						  
+						  
+						  
+					}
+				} 
+			    
+			    catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				br = new BufferedReader(new FileReader(file));
+
+			
+		    br.close();  
 
 		//loop through movie_anagrams, gather values per row
-		while() {
+		while(br.readLine() != null) {
 			
 			// SQL query creation
-			String sqlQuery = "select * \n" + "FROM movie_anagrmas";
+			String sqlQuery = "select * \n" + "FROM movies";
+			
+			
 
 			// SQL query execution
 			ResultSet myTestData = myStat.executeQuery(sqlQuery);
 			
-			
 		}
+		return false;
+		
+	
 		
 	}
 
