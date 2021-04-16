@@ -635,7 +635,7 @@ public class MovieDriver {
 	}
 
 	// processing anagrams from CSV file
-	public boolean processMovieAnagrams() throws SQLException {
+	public boolean processMovieAnagrams() throws SQLException, FileNotFoundException {
 		int movieID = 0;
 		String anagram = null;
 		String nativeName = null;
@@ -649,33 +649,46 @@ public class MovieDriver {
 		Statement myStat = myConn.createStatement();
 
 		// pass the path to the file as a parameter
-		File file = new File("../IT8 test file.csv");
+		File file = new File("IT8 test file.csv");
 
-		BufferedReader br = null;
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		
 
 		try {
 			while (br.readLine() != null) {
-				String[] tokens = br.readLine().split(",");
+				String[] tokens = br(",");
 				nativeName = tokens[0];
 				year = Integer.parseInt(tokens[1].trim());
 				anagram = tokens[2];
+				
+				
 
-				String sqlQuery = "SELECT m.native_name, m.year_made, ma.anagram FROM movies m LEFT JOIN movie_anagrams ma ON m.movie_id = ma.movie_id WHERE m.native_name = "
-						+ nativeName + " AND m.year_made = " + year;
+				String sqlQuery = "SELECT m.native_name, m.year_made, ma.anagram FROM movies m LEFT JOIN movie_anagrams ma ON m.movie_id = ma.movie_id WHERE m.native_name = '"
+						+ nativeName + "' AND m.year_made = " + year;
+				
+				
 				ResultSet myRs = myStat.executeQuery(sqlQuery);
 				
 				//if the resultset is empty, write a movie to the database.
 				if(!myRs.next()) {
-					sqlQuery = "INSERT INTO movies VALUES (" + movieID + ", " + nativeName + ", " + "'"
+					sqlQuery = "INSERT INTO movies VALUES (" + movieID + ", '" + nativeName + "', " + "'"
 							+ englishName + "', '" + year + "')";
 					
 					myStat.executeUpdate(sqlQuery);
+					
 				} else {
 					sqlQuery = "SELECT anagram FROM movie_anagrams WHERE movie_id = " + movieID;
+					
 					myRs = myStat.executeQuery(sqlQuery);
 					
 					if(!myRs.next()) {
-						sqlQuery = "INSERT INTO movie_anagrams VALUES (" + movieID + ", " + anagram + ")";
+						sqlQuery = "INSERT INTO movie_anagrams VALUES (" + movieID + ", '" + anagram + "')";
+						myStat.executeUpdate(sqlQuery);
+					}
+					
+					else {
+						System.out.println("Success");
+						
 					}
 				}
 				
@@ -683,27 +696,29 @@ public class MovieDriver {
 				
 
 			}
+			br.close();
 		}
 
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		br = new BufferedReader(new FileReader(file));
-
-		br.close();
-
-		// loop through movie_anagrams, gather values per row
-		while (br.readLine() != null) {
-
-			// SQL query creation
-			String sqlQuery = "select * \n" + "FROM movies";
-
-			// SQL query execution
-			ResultSet myTestData = myStat.executeQuery(sqlQuery);
-
-		}
+		
+//
+//		br = new BufferedReader(new FileReader(file));
+//
+//		br.close();
+//
+//		// loop through movie_anagrams, gather values per row
+//		while (br.readLine() != null) {
+//
+//			// SQL query creation
+//			String sqlQuery = "select * \n" + "FROM movies";
+//
+//			// SQL query execution
+//			ResultSet myTestData = myStat.executeQuery(sqlQuery);
+//
+//		}
 		return false;
 
 	}

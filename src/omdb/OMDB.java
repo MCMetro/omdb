@@ -1,11 +1,12 @@
 package omdb;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class OMDB {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, FileNotFoundException {
 		// Declare the movie variables
 		int movieID;
 		String englishName;
@@ -79,6 +80,10 @@ public class OMDB {
 			case "6":
 				System.out.println("Testing processMoviePeople\n");
 				test.processMoviePeople();
+			case "7":
+				System.out.println("\nTesting processMovieAnagrams\n");
+				test.processMovieAnagrams();
+				break;
 			}
 			choice = "q";
 		} while (choice != "q");
