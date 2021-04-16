@@ -670,7 +670,16 @@ public class MovieDriver {
 							+ englishName + "', '" + year + "')";
 					
 					myStat.executeUpdate(sqlQuery);
+				} else {
+					sqlQuery = "SELECT anagram FROM movie_anagrams WHERE movie_id = " + movieID;
+					myRs = myStat.executeQuery(sqlQuery);
+					
+					if(!myRs.next()) {
+						sqlQuery = "INSERT INTO movie_anagrams VALUES (" + movieID + ", " + anagram + ")";
+					}
 				}
+				
+				
 				
 
 			}
