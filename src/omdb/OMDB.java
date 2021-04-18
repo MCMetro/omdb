@@ -12,6 +12,9 @@ public class OMDB {
 		String englishName;
 		String nativeName;
 		int yearMade;
+		String role;
+		String stageName;
+		String anagram;
 		MovieDriver test = new MovieDriver();
 
 		// Present the user with a menu
@@ -23,6 +26,11 @@ public class OMDB {
 		System.out.println("5. Run processMovieSong.");
 		System.out.println("6. Run processMoviePeople.");
 		System.out.println("7. Run processAnagrams.");
+		System.out.println("8. Years count descending.");
+		System.out.println("9. Find Movie based on Role and Stage Name.");
+		System.out.println("10. Find Movies that have no songs.");
+		System.out.println("11. Find Movies with no People.");
+		System.out.println("12. Find Movies with Entered Anagram.");
 		System.out.println("q. Exit the program");
 		System.out.print("\nEnter your choice: ");
 		Scanner scan = new Scanner(System.in);
@@ -84,6 +92,30 @@ public class OMDB {
 			case "7":
 				System.out.println("\nTesting processMovieAnagrams\n");
 				test.processMovieAnagrams();
+				break;
+			case "8":
+				System.out.println("\nTesting processYearsCount\n");
+				test.processYearsCount();
+				break;
+			case "9":
+				System.out.println("\nTesting processMovieSelection\n");
+				System.out.print("Enter Role: ");
+				role = scan.nextLine();
+				System.out.print("Enter Actor/Actress Stage Name: ");
+				stageName = scan.nextLine();
+				test.processMovieSelection(role, stageName);
+				break;
+			case"10":
+				System.out.println("\nTesting processMovieOnly\n");
+				test.processMovieOnly();
+			case"11":
+				System.out.println("\nTesting processNoPeople\n");
+				test.processNoPeople();
+			case "12":
+				System.out.println("\nTesting processAnagrams\n");
+				System.out.print("Enter Anagram: ");
+				anagram = scan.nextLine();
+				test.processAnagrams(anagram);
 				break;
 			}
 			choice = "q";

@@ -718,5 +718,164 @@ public class MovieDriver {
 			
 			return false;
 		}
+		
+		
+		//To process year only count by connecting to movie table
+		public void processYearsCount() throws SQLException {
+			
+			try {
+				// Establishing connection to database
+				Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb" , "root" , "");
+				
+				// statement creation
+				Statement myStat = myConn.createStatement();
+				
+				// SQL query execution
+				ResultSet myRs = myStat.executeQuery("SELECT year_made, count(year_made) as count FROM movies GROUP by year_made");
+				
+				// process the results
+				while(myRs.next()) {
+					
+					int year_made = myRs.getInt("year_made");
+					int count = myRs.getInt("count");
+					
+					System.out.println("" + year_made + "," + count);
+					
+					
+				}
+			}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 
+			}
+
+		//To process case 9 where the user can get movie by stage_name and role
+		public void processMovieSelection(String role, String stageName) throws SQLException {
+			
+			try {
+				// Establishing connection to database
+				Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb" , "root" , "");
+				
+				// statement creation
+				Statement myStat = myConn.createStatement();
+				
+				// SQL query execution
+				ResultSet myRs = myStat.executeQuery("SELECT m.movie_id, m.native_name, m.year_made\r\n" + 
+						"FROM movie_people mp\r\n" + 
+						"LEFT JOIN people p ON mp.people_id = p.people_id\r\n" + 
+						"LEFT JOIN movies m ON mp.movie_id = m.movie_id\r\n" + 
+						"WHERE p.stage_name = '" + stageName + "'\r\n" + 
+						"AND mp.role = '" + role + "'");
+			
+			System.out.println("");
+				
+			//process The Results
+				while (myRs.next()) {
+					
+					System.out.println(myRs.getString("movie_id") + ", " +  myRs.getString("native_name") + ", " +  myRs.getString("year_made"));
+					
+					
+				}
+			
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//To process case 10 where the user can get movie that have no songs.
+		public void processMovieOnly() throws SQLException {
+			int movieID;
+			String nativeName;
+			int yearMade;
+			
+			try {
+				// Establishing connection to database
+				Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb" , "root" , "");
+				
+				// statement creation
+				Statement myStat = myConn.createStatement();
+				
+				// SQL query execution
+				ResultSet myRs = myStat.executeQuery("SELECT m.movie_id, m.native_name, m.year_made from movies m left join movie_song ms ON m.movie_id = ms.movie_id\r\n" + 
+						"WHERE song_id IS NULL;");
+				
+			//process The Results
+				while (myRs.next()) {
+					
+		            movieID = myRs.getInt("movie_id");
+		            nativeName = myRs.getString("native_name");
+		            yearMade = myRs.getInt("year_made");
+		            System.out.println(movieID + ", " + nativeName + ", " + yearMade);
+					
+				}
+			
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// To process movies that contain no people by reading movie table an movie_people table
+		public void processNoPeople() throws SQLException {
+			int movieID;
+			String nativeName;
+			int yearMade;
+			
+			try {
+				// Establishing connection to database
+				Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb" , "root" , "");
+				
+				// statement creation
+				Statement myStat = myConn.createStatement();
+				
+				// SQL query execution
+				ResultSet myRs = myStat.executeQuery("SELECT m.movie_id, m.native_name, m.year_made from movies m left join movie_people ms ON m.movie_id = ms.movie_id\r\n" + 
+						"WHERE people_id IS NULL;");
+				
+			//process The Results
+				while (myRs.next()) {
+					
+		            movieID = myRs.getInt("movie_id");
+		            nativeName = myRs.getString("native_name");
+		            yearMade = myRs.getInt("year_made");
+		            System.out.println(movieID + ", " + nativeName + ", " + yearMade);
+					
+				}
+			
+		}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		public void processAnagrams(String anagram) throws SQLException {
+			
+			try {
+				// Establishing connection to database
+				Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/omdb" , "root" , "");
+				
+				// statement creation
+				Statement myStat = myConn.createStatement();
+				
+				// SQL query execution
+				ResultSet myRs = myStat.executeQuery("SELECT * FROM movies m LEFT JOIN movie_anagrams ma ON m.movie_id = ma.movie_id\r\n" + 
+						"WHERE anagram = '" + anagram + "'");
+				
+			//process The Results
+				while (myRs.next()) {
+					
+					System.out.println(myRs.getString("movie_id") + ", " +  myRs.getString("native_name") + ", " +  myRs.getString("year_made"));
+					
+				}
+			
+		}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
 }
