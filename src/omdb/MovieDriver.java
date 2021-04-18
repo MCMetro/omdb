@@ -657,7 +657,7 @@ public class MovieDriver {
 
 			// statement creation
 			Statement myStat = myConn.createStatement();
-			File file = new File("/Users/mahadhussein/eclipse-workspace/omdb/IT8 test file.csv");
+			File file = new File("IT8 test file.csv");
 			String line = "";
 			try {
 				/**
