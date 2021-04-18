@@ -22,6 +22,7 @@ public class OMDB {
 		System.out.println("4. Delete a movie from the database.");
 		System.out.println("5. Run processMovieSong.");
 		System.out.println("6. Run processMoviePeople.");
+		System.out.println("7. Run processAnagrams.");
 		System.out.println("q. Exit the program");
 		System.out.print("\nEnter your choice: ");
 		Scanner scan = new Scanner(System.in);
