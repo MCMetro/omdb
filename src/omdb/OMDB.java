@@ -40,24 +40,7 @@ public class OMDB {
 		do {
 			switch (choice) {
 			// Create a new movie
-			case "0":
-				System.out.println("Choose a Database Operation:");
-				System.out.println("1. Create a new movie in the database.");
-				System.out.println("2. Update a movie in the database.");
-				System.out.println("3. Read a movie from the database.");
-				System.out.println("4. Delete a movie from the database.");
-				System.out.println("5. Run processMovieSong.");
-				System.out.println("6. Run processMoviePeople.");
-				System.out.println("7. Run processAnagrams.");
-				System.out.println("8. Years count descending.");
-				System.out.println("9. Find Movie based on Role and Stage Name.");
-				System.out.println("10. Find Movies that have no songs.");
-				System.out.println("11. Find Movies with no People.");
-				System.out.println("12. Find Movies with Entered Anagram.");
-				System.out.println("q. Exit the program");
-				System.out.print("\nEnter your choice: ");
-				scan = new Scanner(System.in);
-				choice = scan.nextLine();
+
 			case "1":
 				System.out.println("\nCreate a new movie! \n");
 				System.out.print("Enter movie ID: ");
@@ -136,7 +119,7 @@ public class OMDB {
 				test.processAnagrams(anagram);
 				break;
 			}
-			choice = "0";
+			choice = "q";
 		} while (choice != "q");
 
 		scan.close();
