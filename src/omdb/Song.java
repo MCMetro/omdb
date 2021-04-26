@@ -150,5 +150,9 @@ public class Song {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public String toString() {
+		String songString = "Song ID: " + this.getSongID() + ", Title: " + this.getTitle();
+		return songString;
+	}
 
 }

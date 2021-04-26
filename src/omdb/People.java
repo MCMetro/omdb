@@ -19,7 +19,18 @@ public class People {
 	public People(int peopleID, String stageName) {
 		this.peopleID = peopleID;
 		this.stageName = stageName;
-
+		this.firstName = null;
+		this.middleName = null;
+		this.lastName = null;
+		this.gender = null;
+	}
+	
+	public People (int peopleID, String stageName, String firstName, String lastName) {
+		this.peopleID = peopleID;
+		this.stageName = stageName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = null;
 	}
 	
 	public static boolean checkPeople(String stageName) {
@@ -102,5 +113,10 @@ public class People {
 
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
+	}
+	public String toString() {
+		String peopleString = "People ID: " + this.getPeopleID() + ", Stage Name: " + this.getStageName() +
+				", First Name: " + this.getFirstName() + ", Last Name: " + this.getLastName();
+		return peopleString;
 	}
 }

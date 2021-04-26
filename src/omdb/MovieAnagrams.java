@@ -18,6 +18,10 @@ public class MovieAnagrams {
 	public String getAnagram() {
 		return anagrams;
 	}
+	public String toString() {
+		String anagramString = this.getAnagram();
+		return anagramString;
+	}
 
 
 }
