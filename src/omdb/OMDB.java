@@ -40,6 +40,7 @@ public class OMDB {
 		do {
 			switch (choice) {
 			// Create a new movie
+
 			case "1":
 				System.out.println("\nCreate a new movie! \n");
 				System.out.print("Enter movie ID: ");
