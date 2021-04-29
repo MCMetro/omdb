@@ -31,6 +31,7 @@ public class OMDB {
 		System.out.println("10. Find Movies that have no songs.");
 		System.out.println("11. Find Movies with no People.");
 		System.out.println("12. Find Movies with Entered Anagram.");
+		System.out.println("13. FullyDressedMovie.");
 		System.out.println("q. Exit the program");
 		System.out.print("\nEnter your choice: ");
 		Scanner scan = new Scanner(System.in);
@@ -118,6 +119,48 @@ public class OMDB {
 				anagram = scan.nextLine();
 				test.processAnagrams(anagram);
 				break;
+			case "13":
+				System.out.println("\nTesting FullyDressedMovie\n");
+				System.out.print("Enter Movie ID: ");
+				movieID = scan.nextInt();
+				FullyDressedMovie fullyDressed = FullyDressedMovie.getInfo(movieID);
+				Movie tm = fullyDressed.getMovie();
+				System.out.println("Movie details \n");
+				System.out.println("Movie ID: " + tm.getMovieID());
+				System.out.println("Native Name: " + tm.getNativeName());
+				System.out.println("Year Made: " + tm.getYearMade() + "\n");
+				System.out.println("Songs in the movie: \n");
+				if (fullyDressed.getSongList().isEmpty()) {
+					System.out.println("List is Empty");
+				} else {
+					for (Song o : fullyDressed.getSongList()) {
+						System.out.println(o.toString());
+					}
+				}
+				System.out.println("\nPeople associated with each song in the movie: \n");
+				if (fullyDressed.getSPList().isEmpty()) {
+					System.out.println("List is Empty");
+				} else {
+					for (SongPeople sp : fullyDressed.getSPList()) {
+						System.out.println(sp.toString());
+					}
+				}
+				System.out.println("\nPeople associated with the movie: \n");
+				if (fullyDressed.getMPList().isEmpty()) {
+					System.out.println("List is Empty");
+				} else {
+					for (People p : fullyDressed.getMPList()) {
+						System.out.println(p.toString());
+					}
+				}
+				System.out.println("\nAnagrams of the Movie: \n");
+				if (fullyDressed.getAList().isEmpty()) {
+					System.out.println("List is Empty");
+				} else {
+					for (MovieAnagrams a : fullyDressed.getAList()) {
+						System.out.println(a.toString());
+					}
+				}
 			}
 			choice = "q";
 		} while (choice != "q");
